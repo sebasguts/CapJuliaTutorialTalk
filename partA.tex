@@ -303,7 +303,7 @@
 % $\kvec
 \begin{frame}[fragile]
  \frametitle{Finite dimensional vector spaces}
- Let $k$ be a field.
+ Let $k$ be a field (e.g., $k = \Q$).
  \pause
  \begin{block}{Example: $\kvec$}
   \begin{itemize}
@@ -391,126 +391,168 @@
    \end{block}
 \end{frame}
 
-% Equivalences
 \begin{frame}[fragile]
- \frametitle{Equivalences}
+  \frametitle{Finitely presented modules}
+  Let $R$ be a ring, e.g., $R = \Z$.
+  \begin{block}{Definition}
+    $R$-modules of the form
+    \[
+      \frac{R^{1 \times n}}{\langle r_1, \dots, r_m \rangle}
+    \]
+    are called \textbf{finitely presented}, where $r_1, \dots, r_m \in R^{1 \times n}$.
+  \end{block}
+ \end{frame}
  
- \begin{block}{Example}
-    \begin{center}
-      \begin{tikzpicture}[transform shape,mylabel/.style={thick, draw=black, align=center,minimum width=0.5cm, minimum height=0.5cm,fill=white}]
-      \coordinate (r) at (6,0);
-      \coordinate (d) at (0,-1);
-      
-      \node (Rep) {$\Rep(G)$};
-      \node (kvec) at ($(Rep) + (r)$) {$\only<1-5>{{\bigoplus_{i \in \Irr( G )}{\kvec}}}\only<6->{{\color{computerfriendly}\bigoplus_{i \in \Irr( G )}{\kvec}}}$};
-      \path[->, thick] (Rep) edge node[above, inner sep = 0.1em]{$\sim$}(kvec);
-      
-      \visible<2->{
-      \node (source) at ($(Rep) + (d)$) {{$V$}};
-      }
-      \visible<3->{
-      \node (source2) at ($(source) + 0.3*(r)$) {$\bigoplus_{i \in \Irr(G)}\only<3>{a_i}\only<4->{{\color{computerfriendly}a_i}} V^i$};
-      \path[draw=none] (source) -- node[]{$\simeq$}(source2);
-      }
-      
-      \visible<5->{
-      \node (range) at ($(kvec) + (d)$) {${\color{computerfriendly}(a_i)_{i}}$};
-      \path[draw=none] (source2) -- node[]{$\longmapsto$}(range);
-      }
-    \end{tikzpicture}
-    \end{center}
- \end{block}
- 
-\end{frame}
+ \begin{frame}[fragile]
+  \frametitle{Examples}
+   $M \cong \frac{R^{1 \times n}}{\langle r_1, \dots, r_m \rangle}$
+   \pause
+   \begin{block}{$R =\Z$}
+    \pause
+    \[
+     \frac{\Z}{\langle 2 \rangle}
+    \]
+    \pause
+    \[
+      \frac{\Z}{\langle 2 \rangle} \oplus \frac{\Z}{\langle 4 \rangle} \simeq \frac{\Z^{1 \times 2}}{\langle (2,0),(0,4) \rangle}
+    \]
+    \pause
+    \[
+    \frac{\Z^{1 \times 3}}{\scriptsize
+    \langle
+    \only<1-5>{
+    \mathrm{Rows~of}
+    }
+    \left(
+   \begin{array}{ccc}
+    1 & 2 & 3 \\
+    4 & 5 & 6 \\
+    7 & 8 & 9 \\
+   \end{array}
+ \right)
+ \rangle
+ }
+ \]
+   \end{block}
+  \pause
+ \end{frame}
+
+ \begin{frame}[fragile]
+  \frametitle{Category of finitely presented modules}
+  \begin{block}{}
+  Finitely presented $R$-modules form a category
+  \pause
+  \[
+  \modR 
+  \]
+  \pause
+  with $R$-linear maps as morphisms.
+  \end{block}
+  \pause
+  \begin{center}
+   \textbf{\color{computerfriendly}{Computerfriendly model?}}
+  \end{center}
+ \end{frame}
 
 \begin{frame}[fragile]
- \frametitle{Equivalences: $\mathrm{Rep}_{k}(G)$}
- 
- \begin{block}{Example: $S_3$, irreducible representations: $V^\mathds{1}, V^\mathrm{sgn}, V^\chi$}
-    \begin{center}
-  \begin{tikzpicture}[label/.style={postaction={
-      decorate,
-      decoration={markings, mark=at position .5 with \node #1;}}}]
-    \coordinate (r) at (7,0);
-    \coordinate (u) at (0,0.4);
-    \coordinate (d) at (0,-1.5);
-    \node (A) {$V$};
-    
-    \node (B) at ($(A)+(r)$) {$V$};
-    
-    \node (C) at ($(A) + (d)$) 
-    {$  {\only<2,6>{\color{computerfriendly}}V^{\mathds{1}}} \oplus {\only<3,7>{\color{computerfriendly}}V^{\mathrm{sgn}}} \oplus {\only<4,8>{\color{computerfriendly}}V^{\chi} \oplus V^{\chi}}$};
-    
-    \node (D) at ($(B) + (d)$)
-    {$  {\only<2,6>{\color{computerfriendly}}V^{\mathds{1}}} \oplus {\only<3,7>{\color{computerfriendly}}V^{\mathrm{sgn}}} \oplus {\only<4,8>{\color{computerfriendly}}V^{\chi} \oplus V^{\chi}}$};
-    
-    \node (F) at ($0.5*(A)+0.5*(B) + 2.5*(u)$) [scale = 0.6]{
-    $
-    \begin{pmatrix*}[r]
-      -102&5824&  -96& 20& 1444& 584 \\
-      58&  -2366& 60&  8&  -590& -240 \\
-      83&  -5366& 75&  -28&-1328&-536 \\
-      -25& 1354&  -24& 3&  336&  136 \\ 
-      -377&17200& -384&-28&4279& 1736 \\
-      351& -18877&348& -12&-4682&-1893
-      \end{pmatrix*}
-      $
-    };
-    
-      \node (G) at ($0.5*(C)+0.5*(D)-2*(u)$) {
-        $
-        \mathrm{Diag}( {\only<6,10->{\color{computerfriendly}}-1}, {\only<7,10->{\color{computerfriendly}}3},
-        {
-        \only<8,10->{\color{computerfriendly}}
-        \begin{pmatrix*}[r]
-          {-2} & {4} \\
-          {1} & {-1}
-        \end{pmatrix*}
-        }
-          \otimes I_2 )
-          $
-    };
-    \draw[->,thick] (A) -- (B);
-    \draw[->,thick] (A) --node[rotate = -90, yshift = -0.3em]{$\sim$} (C);
-    \draw[->, thick] (B) --node[rotate = -90, yshift = -0.3em]{$\sim$} (D);
-    \draw[->,thick] (C) -- (D);
-  \end{tikzpicture}
-  \end{center}
-  \end{block}   
+  \frametitle{Data structures: objects}
   
-  \visible<11->{
-  \begin{block}{}
-   \begin{center}
-    $\mathrm{Rep}_{\Q}( S_3) \simeq \Q\mathrm{\text{-}vec} \oplus \Q\mathrm{\text{-}vec} \oplus \Q\mathrm{\text{-}vec}$ 
-   \end{center}
-  \end{block}
-  }
+  \[
+    \frac{\Z^{1 \times 3}}{\scriptsize
+    \langle
+    \only<1>{
+    \mathrm{Rows~of}
+    }
+    \only<3->{
+    \color{blue}
+    }
+    \left(
+      \begin{array}{ccc}
+        1 & 2 & 3 \\
+        4 & 5 & 6 \\
+        7 & 8 & 9 \\
+       \end{array}
+ \right)
+ \rangle
+ }
+ \]
+ \visible<4->{
  \begin{center}
-  \begin{tikzpicture}[label/.style={postaction={
-              decorate,
-              decoration={markings, mark=at position .5 with \node #1;}},
-              mylabel/.style={thick, draw=none, align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white}}, scale=1, every node/.style={scale=1}]
-              \coordinate (r) at (3.5,0);
-              \coordinate (d) at (0,-1);
-              \visible<12->{
-              \node (A) {$\oplus \longleftrightarrow \oplus$};
-              }
-              \visible<13->{
-              \node (B) at ($(A) + (r)$) {$\kernel \longleftrightarrow \kernel$};
-              }
-              \visible<14>{
-              \node (C) at ($(B) + (r)$) {$\simeq \hspace{0.5em} \longleftrightarrow \hspace{0.5em} \simeq$};
-              }
-              \visible<15>{
-              \node (C) at ($(B) + (r)$) {$\simeq \hspace{0.5em} \longleftrightarrow \hspace{0.5em} =$};
-              }
-          \end{tikzpicture}
+ Idea: a matrix $M \in R^{m \times n}$ can represent the module $\frac{R^{1 \times n}}{\langle M \rangle}$. 
  \end{center}
+ }
+ \visible<5->{
+ \begin{block}{Objects}
+  \[
+   \Obj_{\fpresR} := \biguplus_{m,n \in \N_0} R^{m \times n}
+  \]
+ \end{block}
+ }
+ 
+ \end{frame}
+
+ 
+\begin{frame}[fragile]
+ \frametitle{Data structures: morphisms}
+ Given: $M \in R^{m \times n}$ and $M' \in R^{m' \times n'}$.
+ \visible<2->{
+ \begin{center}
+  \begin{tikzpicture}
+      \coordinate (r) at (3,0);
+      \coordinate (d) at (0,-1);
+      
+      \node (M) {$\frac{R^{1 \times n}}{\langle M \rangle}$};
+      \node (Mp) at ($(M) + (r)$) {$\frac{R^{1 \times n'}}{\langle M' \rangle}$};
+      
+      \visible<4->{
+      \node (eM) at ($(M) + (d)$) {$\overline{e_i}$};
+      }
+      \visible<5->{
+      \node (eMp) at ($(Mp) + (d)$) {$\overline{r_i}$};
+      }
+      
+      \visible<3->{
+      \draw[->,thick] (M) --node[above]{\text{\only<8->{$A :=$}\visible<6->{$\pmatcol{r_1}{\vdots}{r_n}$}}} (Mp);
+      }
+      \visible<5->{
+      \draw[draw = none] (eM) --node[]{$\longmapsto$} (eMp);
+      }
+  \end{tikzpicture}
+ \end{center}
+ }
+ \visible<7->{
+\begin{block}{$\Hom_{\fpresR}( M, M' ) := $}
+ \begin{center}
+  \begin{minipage}{5em}
+   \visible<8->{$A \in R^{n \times n'}\phantom{\big\{}$}
+  \end{minipage}
+  \begin{minipage}{5em}
+   \visible<9->{such that}
+  \end{minipage}
+  \begin{minipage}{15em}
+   \only<1-9>{\ }
+   \only<10>{$\big\{ \text{Rows of~}M \cdot A \big\} \subseteq \langle M' \rangle$}
+   \only<11->{\only<14>{\color{blue}}$\exists X \in R^{m \times m'}: M \cdot A = X \cdot M'\phantom{\big\{}$}
+  \end{minipage}
+ \end{center}
+\end{block}
+}
+\visible<12->{
+\begin{center}
+ $A$ defines the $0$ morphism \visible<13->{iff {\only<14->{\color{blue}}$\exists X \in R^{n \times m'}: A = X \cdot M'$}}
+\end{center}
+}
+\visible<15->{
+  $\rightsquigarrow$ algorithmic requirements for $R$ \visible<16->{(for $R=\Z$, use Smith normal forms)}
+}
 \end{frame}
+
 
 
 % The language of category theory
 \begin{frame}[fragile]
+  $\kvec$ and $\modZ$ are examples of \textbf{abelian categories}.
+  \pause
  \frametitle{The language of category theory}
  \begin{block}{Some categorical operations in abelian categories}
   \begin{itemize}
@@ -521,7 +563,7 @@
    \pause
    \item $+,-: \Hom(A,B) \times \Hom(A,B) \rightarrow \Hom(A,B)$
    \pause
-   \item {\only<7->{\color{red}}$\kernel: \Hom(A,B) \rightarrow \Obj$}
+   \item {\only<8->{\color{red}}$\kernel: \Hom(A,B) \rightarrow \Obj$}
    \pause
    \item ...
   \end{itemize}
