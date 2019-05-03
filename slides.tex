@@ -1,0 +1,365 @@
+\documentclass{beamer}
+
+
+%\useoutertheme{infoline}
+%\useinnertheme{rectangles}
+\usepackage{beamerouterthemesplit}
+ \useoutertheme{infolines}
+\usetheme{Warsaw}
+
+\usepackage[utf8]{inputenc}        
+\usepackage[T1]{fontenc}             
+% \usepackage[ngerman]{babel}
+\usepackage{dsfont}
+\usepackage{times}          
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\usepackage{bbm}
+\usepackage{stmaryrd}
+\usepackage{xspace}
+
+\usepackage{hyperref}
+
+\usepackage{tikz}
+\usetikzlibrary{
+shapes,
+shapes.symbols,
+shapes.callouts,
+arrows,
+matrix,
+backgrounds,
+positioning,
+plotmarks,
+calc,
+patterns,
+matrix,
+decorations.pathreplacing,
+decorations.pathmorphing,
+decorations.text,
+decorations.shapes,
+decorations.fractals,
+decorations.markings,
+spy
+}
+\usepackage[colorinlistoftodos,shadow]{todonotes}
+\usepackage{listings}
+
+\usepackage{xcolor}
+\usepackage{fancyvrb}
+
+\usepackage{tikz-cd}
+
+\newtheorem{defsatzusw}{}
+\newtheorem{defi}[defsatzusw]{Definition}
+\newtheorem{prop}[defsatzusw]{Proposition}
+\newtheorem{satz}[defsatzusw]{Satz}
+\newtheorem{bez}[defsatzusw]{Notation}
+\newtheorem{bemerkung}[defsatzusw]{Bemerkung}
+\newtheorem{lem}[defsatzusw]{Lemma}
+\newtheorem{korollar}[defsatzusw]{Corollary}
+\newtheorem{myexample}[defsatzusw]{Example}
+\newtheorem{konst}[defsatzusw]{Construction}
+\newtheorem{notation}[defsatzusw]{Notation}
+\newtheorem{eri}[defsatzusw]{Erinnerung}
+\newtheorem{remark}[defsatzusw]{Remark}
+\newtheorem{sequent}[defsatzusw]{Sequent}
+% \newtheorem{block}[defsatzusw]{\phantom{a}}
+
+% \theoremstyle{nonumberbreak}
+\newtheorem{bew}{Beweis}
+\newtheorem{beweisskizze}{Beweisskizze}
+
+\beamertemplatenavigationsymbolsempty
+
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+% \newcommand{\G}{\mathbb{G}}
+\newcommand{\Frob}{\phi_q}
+\DeclareMathOperator{\kernel}{ker}
+\DeclareMathOperator{\im}{im}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\h}{\mathfrak{h}}
+\renewcommand{\i}{\mathfrak{i}}
+\newcommand{\gl}{\mathfrak{gl}}
+\newcommand{\n}{\mathfrak{n}}
+\newcommand{\nminus}{\mathfrak{n}_{-}}
+\renewcommand{\sl}{\mathfrak{sl}}
+\newcommand{\slz}{\mathfrak{sl}_2}
+% \newcommand{\b}{\mathfrak{b}}
+
+\DeclareMathOperator{\domain}{dom}
+\DeclareMathOperator{\defect}{def}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Det}{det}
+\DeclareMathOperator{\Mon}{Mon}
+\DeclareMathOperator{\ggt}{ggT}
+\DeclareMathOperator{\Min}{min}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\New}{New}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\voln}{Vol_n}
+\DeclareMathOperator{\volnn}{Vol_{n-1}}
+\DeclareMathOperator{\MV}{MV}
+\DeclareMathOperator{\Dim}{dim}
+\DeclareMathOperator{\SMV}{SMV}
+\DeclareMathOperator{\sgn}{Signum}
+\DeclareMathOperator{\Null}{Null}
+\DeclareMathOperator{\Pot}{Pot}
+\DeclareMathOperator{\Ass}{Ass}
+\DeclareMathOperator{\Rg}{Rg}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\vol2}{Vol_{2}}
+\DeclareMathOperator{\Char}{Char}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\CDiv}{CDiv}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Kern}{Kern}
+\DeclareMathOperator{\Kokern}{Kokern}
+\DeclareMathOperator{\Bild}{Bild}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Kegel}{Kegel}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Quot}{Quot}
+\DeclareMathOperator{\Lie}{L}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\chars}{Char}
+\DeclareMathOperator{\divis}{div}
+\DeclareMathOperator{\Cone}{Cone}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Fix}{Fix}
+\DeclareMathOperator{\Weyl}{W}
+\DeclareMathOperator{\Coxeter}{C}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\G}{G}
+\DeclareMathOperator{\CH}{H}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Sh}{Sh}
+\DeclareMathOperator{\grmod}{grmod}
+\DeclareMathOperator{\Projectives}{Projectives}
+\DeclareMathOperator{\Tot}{Tot}
+\DeclareMathOperator{\Image}{im}
+\DeclareMathOperator{\Kernel}{ker}
+\DeclareMathOperator{\KernelEmbedding}{KernelEmbedding}
+\DeclareMathOperator{\KernelObject}{KernelObject}
+\DeclareMathOperator{\KernelLift}{KernelLift}
+
+\renewcommand{\P}{\mathbb{P}}
+\renewcommand{\phi}{\varphi}
+
+\newcommand{\mathO}[1]{\mathcal{O}_{#1}}
+\xdefinecolor{darkgreen}{RGB}{175, 193, 36}
+\definecolor{forestgreen}{RGB}{173,255,47}
+\newcommand{\myblue}{blue!15}
+
+\newcommand{\CategoriesForHomalg}{\texttt{Categories} }
+\newcommand{\CapPkg}{\textsc{Cap}\xspace}
+\newcommand{\Gap}{\textsc{Gap}\xspace}
+\newcommand{\ToolsForHomalg}{\texttt{ToolsForHomalg} }
+
+\definecolor{objects}{cmyk}{.25,1,.7,.2}
+\definecolor{morphisms}{cmyk}{1,.4,1,0}
+\definecolor{later_morphisms}{cmyk}{.6,0,1,0}
+\definecolor{later_arrow}{cmyk}{0,.59,1,.12}
+\definecolor{darkgray}{rgb}{0.3,0.3,0.3}
+
+\definecolor{computerfriendly}{cmyk}{.6,0,1,0}
+\definecolor{computerfriendlymor}{rgb}{0.3,0.3,1}
+
+\newcommand{\FiberProduct}{\mathrm{FiberProduct}}
+\newcommand\Rpres{{\ensuremath{R\mathrm{\textnormal{-}fpres}}}\xspace}
+\newcommand{\Obj}{\mathrm{Obj}}
+\newcommand{\Mor}{\mathrm{Mor}}
+\newcommand{\Int}{\mathrm{Int}}
+\newcommand{\ListObj}{\mathrm{ListObj}}
+\newcommand{\Pushout}{\mathrm{Pushout}}
+\newcommand{\KernelEmb}{\mathrm{KernelEmb}}
+\newcommand{\DirectProduct}{\mathrm{DirectProduct}}
+\newcommand{\TerminalObject}{\mathrm{TerminalObject}}
+\newcommand{\PreCompose}{\mathrm{PreCompose}}
+\newcommand{\ProjectionInFactor}{\mathrm{ProjectionInFactor}}
+\newcommand{\Efpgrmod}{\wedge V\textnormal{-}\mathrm{grmod}}
+\newcommand{\EGfpgrmod}{\wedge V\rtimes G\textnormal{-}\mathrm{grmod}}
+\newcommand{\Coh}{\mathfrak{Coh}}
+\newcommand{\Pro}{\mathbb{P}}
+\newcommand{\Gen}[1]{\G ( \mathcal{#1} ) }
+
+% \newcommand{\SeppVisible}[2]{\visible<\textsl{\detokenize{#1}}>{#2}}
+\newcommand{\visiblethree}[1]{\visible<3->{#1}}
+\newcommand{\visiblefour}[1]{\visible<4->{#1}}
+\newcommand{\visiblefive}[1]{\visible<5->{#1}}
+\newcommand{\visiblesix}[1]{\visible<6->{#1}}
+\newcommand{\visibleseven}[1]{\visible<7->{#1}}
+\newcommand{\visibleeight}[1]{\visible<8->{#1}}
+\newcommand{\visiblenine}[1]{\visible<9->{#1}}
+\newcommand{\visibleten}[1]{\visible<10->{#1}}
+\newcommand{\visibleeleven}[1]{\visible<11->{#1}}
+\newcommand{\visiblethirteen}[1]{\visible<13->{#1}}
+\newcommand{\visiblefifteen}[1]{\visible<15->{#1}}
+
+\newcommand{\intExt}{\mathcal{E}xt}
+\newcommand{\intHom}{\mathcal{H}om}
+
+\newcommand*{\ifactor}{1.5}%
+\newcommand{\dashdownarrow}{\raisebox{2.0ex}{\rotatebox{-90}{$\dashrightarrow$}}}
+\newcommand{\stgrmod}{\text{-}\underline{\smash{\mathrm{grmod}}}}
+\newcommand{\SRep}{\mathrm{{{\color{computerfriendly}S}}Rep}_{k}}
+
+\newcommand{\kxnpgrmod}{{{\ensuremath{K\left[x_1,\dots,x_{n+1}\right]\mathrm{\textnormal{-}grmod}}}\xspace}}
+\newcommand{\kxngrmod}{{{\ensuremath{K\left[x_1,\dots,x_{n}\right]\mathrm{\textnormal{-}grmod}}}\xspace}}
+\newcommand{\kxnmod}{{{\ensuremath{K\left[x_1,\dots,x_{n}\right]\mathrm{\textnormal{-}mod}}}\xspace}}
+\newcommand{\sgrmod}{{{\ensuremath{S\mathrm{\textnormal{-}grmod}}}\xspace}}
+\newcommand{\sgrmodred}{{{\ensuremath{S\mathrm{\textnormal{-}{\color{red}grmod}}}}\xspace}}
+\newcommand{\smod}{{{\ensuremath{S\mathrm{\textnormal{-}mod}}}\xspace}}
+
+\newcommand{\kvec}{k\mathrm{\text{-}vec}}
+\DeclareMathOperator{\Irr}{\mathrm{Irr}}
+\newcommand{\Rep}{\mathrm{Rep}_{k}}
+\renewcommand{\P}{\mathbb{P}}
+\renewcommand{\phi}{\varphi}
+
+\defbeamertemplate{section page}{mine}[1][]{%
+  \begin{centering}
+    {\usebeamerfont{section name}\usebeamercolor[fg]{section name}#1}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=12pt,center]{part title}
+      \usebeamerfont{section title}\insertsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
+
+\setbeamertemplate{section page}[mine]
+
+\AtBeginPart{\frame{\partpage}}
+\AtBeginSection{
+\begin{frame}
+ \frametitle{}
+ \tableofcontents[currentsection]
+\end{frame}
+}
+\AtBeginSubsection{
+\begin{frame}
+ \frametitle{}
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+}
+
+\title[Constructive categories]{Introduction to \CapPkg: Constructive category theory and applications}
+\author[Gutsche, Posur]{Sebastian Gutsche and Sebastian Posur}
+\date[November 22, 2018]{November 22, 2018}
+\titlegraphic{\includegraphics[width=0.25\textwidth,height=0.25\textheight]{Logo_CAP.jpg}}
+\institute[Siegen]{University of Siegen}
+
+\begin{document}
+
+\defverbatim{\assemblyint}{
+\begin{Verbatim}
+addi:
+movl  %edi, -4(%rsp)
+movl  %esi, -8(%rsp)
+movl  -4(%rsp), %esi
+addl  -8(%rsp), %esi
+movl  %esi, %eax
+ret
+\end{Verbatim}
+}
+
+\defverbatim{\cinteger}{
+\begin{Verbatim}
+int addi( int a,
+	  int b )
+{
+  return a + b;
+}
+\end{Verbatim}
+}
+
+\defverbatim{\assemblyfloat}{
+\begin{Verbatim}
+addf:
+movss %xmm0, -4(%rsp)
+movss %xmm1, -8(%rsp)
+movss -4(%rsp), %xmm0
+addss -8(%rsp), %xmm0
+ret
+\end{Verbatim}
+}
+
+\defverbatim{\cfloat}{
+\begin{Verbatim}
+float addf( float a, 
+	    float b )
+{
+  return a + b;
+}
+\end{Verbatim}
+}
+
+\defverbatim{\juliacode}{
+\begin{Verbatim}
+function( a, b )
+    return a + b;
+end;
+\end{Verbatim}
+}
+
+
+\begin{frame}[fragile]
+\titlepage
+\end{frame}
+
+% \begin{frame}
+%  \frametitle{Outline}
+%  \tableofcontents[pausesections]
+% \end{frame}
+
+
+%% Talk:
+%% Posur: 1-4; 8-17; 24-35; 48-51
+%% Gutsche: 5-7; 18-23; 36-47; 52-58
+
+\part{Constructive category theory}
+
+\input{partA}
+
+\part{Generalized morphisms}
+
+\input{partB}
+
+\begin{frame}[allowframebreaks,fragile]
+ \frametitle{References}
+  \nocite{GutscheDoktor}
+  \nocite{PosurDoktor}
+  \nocite{HiltonCorr}
+  \nocite{PuppeKorr}
+  \nocite{JohnstoneElephantI}
+  \nocite{CAP-project}
+  \nocite{BL}
+  \nocite{BL_GabrielMorphisms}
+ \bibliographystyle{myalpha}
+ \newcommand{\includebibliography}[1]{\bibliography{#1/a,#1/b,#1/c,#1/d,#1/e,#1/f,#1/g,#1/h,#1/i,#1/j,#1/k,#1/l,#1/m,#1/n,#1/o,#1/p,#1/q,#1/r,#1/s,#1/t,#1/u,#1/v,#1/w,#1/x,#1/y,#1/z}}
+ 
+ \input{includebib}
+ 
+\end{frame}
+
+
+\end{document}

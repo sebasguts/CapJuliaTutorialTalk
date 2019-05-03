@@ -1,0 +1,1212 @@
+\begin{frame}
+ \frametitle{}
+ \tableofcontents
+\end{frame}
+
+\section{Classical diagram chases}
+
+
+% What are diagram chases?
+\begin{frame}[fragile]
+ \frametitle{What are diagram chases?}
+ \pause
+ \begin{block}{}
+  Diagram chases are a tool in homological algebra
+  used for proving 
+  \pause
+  \begin{enumerate}
+   \item properties
+   \pause
+   \item {\only<7->{\color{red}}the existence}
+   \pause
+  \end{enumerate}
+  of morphisms 
+  \pause
+  situated in (commutative) diagrams of prescribed shape.
+ \end{block}
+\end{frame}
+
+% Connecting homomorphism in the snake lemma
+\begin{frame}[fragile]
+ \frametitle{Connecting homomorphism in the snake lemma}
+ \begin{center}
+ \begin{tikzpicture}[mystyle/.style={scale=.7}]
+  \matrix[matrix of math nodes,column sep={70pt,between origins},row sep={40pt,between origins}] (s)
+  { & & & |[name=Kernel]| \text{\only<1>{$\kernel(\gamma)$}\only<2>{${\color{red}c} \in \kernel(\gamma)$}\only<3->{$c \in \kernel(\gamma)$ }} & \\
+    &|[name=A]| A &|[name=B]| \text{\only<1-3>{$B$}\only<4>{${\color{red}b} \in B$}\only<5->{$b \in B$}} &|[name=C]| \text{\only<1-2>{$C$}\only<3>{${\color{red}c} \in C$}\only<4->{$c \in C$}} &|[name=01]| 0 \phantom{C}  \\
+    |[name=02]| \phantom{a'} 0 &|[name=A']| \text{ \only<1-5>{$A'$}\only<6>{${\color{red}a'} \in A'$}\only<7->{$a' \in A'$} } &|[name=B']| \text{ \only<1-4>{$B'$}\only<5>{${\color{red}b'} \in B'$}\only<6->{$b' \in B'$} } &|[name=C']| C' \\
+    & |[name=Coker]| \text{ \only<1-6>{$\coker(\alpha)$}\only<7>{${\color{red}a' + \im( \alpha )}\in \coker( \alpha )$}\only<8->{$a' + \im( \alpha )\in \coker( \alpha )$} } & & & \\
+  };
+              \path[->,thick] (Kernel) edge (C);
+              \path[->,thick] (C) edge (01);
+              \path[->,thick] (A) edge (B);
+              \path[->,thick] (B) edge node[mystyle,anchor=south] {$\epsilon$} (C);
+              \path[->,thick] (A) edge node[mystyle,anchor=east] {$\alpha$} (A');
+              \path[->,thick] (B) edge node[mystyle, anchor=east] {$\beta$} (B');
+              \path[->,thick] (C) edge node[mystyle,anchor=east] {$\gamma$} (C');
+              \path[->,thick] (02) edge (A');
+              \path[->,thick] (A') edge node[mystyle,anchor=north] {$\mu$} (B');
+              \path[->,thick] (B') edge (C');
+              \path[->,thick] (A') edge (Coker);
+              \visible<8->{
+              \draw[->,rounded corners,thick,blue] (Kernel) -| ($(01.east)+(.5,0)$) |- ($(B)!.35!(B')$) -|
+    ($(02.west)+(-.5,0)$) |- (Coker);}
+  \end{tikzpicture}
+ \end{center}
+ 
+ \begin{block}{}
+ \begin{center}
+  \only<1>{Wanted: $\kernel(\gamma) \stackrel{\partial}{\longrightarrow} \coker( \alpha )$. \phantom{$\stackrel{:}{T_g}$} }
+  \only<2>{Start: $c \in \kernel( \gamma )$. \phantom{$\stackrel{:}{T_g}$}}
+  \only<3>{This lies in $C$. \phantom{$\stackrel{:}{T_g}$}}
+  \only<4>{Choose: $b \in \epsilon^{-1}(\{c\})$. \phantom{$\stackrel{:}{T_g}$}}
+  \only<5>{Map: $b \stackrel{\beta}{\mapsto} b'$. \phantom{$\stackrel{:}{T_g}$} }
+  \only<6>{Compute: $a' \in \mu^{-1}(b')$. \phantom{$\stackrel{:}{T_g}$} }
+  \only<7>{Map: $a' \mapsto a' + \im( \alpha )$.\phantom{$\stackrel{:}{T_g}$}}
+  \only<8-9>{ Result: $c \stackrel{{\color{blue}\partial}}{\mapsto} a' + \im( \alpha )$.
+  \visible<9>{\textbf{Context}: modules} \phantom{$\stackrel{:}{T_g}$}}
+  \end{center}
+ \end{block}
+\end{frame}
+
+
+% Classical solutions: embedding theorems
+\begin{frame}[fragile]
+\frametitle{Classical solutions: embedding theorems}
+ \pause
+ \begin{block}{Freyd-Mitchell embedding theorem}
+  \pause
+  Any small abelian category $\mathbf{A}$ admits an exact fully faithful covariant embedding 
+  \[
+   F: \mathbf{A} \hookrightarrow R-\mathbf{mod}
+  \]
+  into the category of $R$-modules for some ring $R$.
+ \end{block}
+ \pause
+ \begin{block}{Application: existence of morphisms}
+  \begin{center}
+   \begin{tikzpicture}
+   \coordinate (r) at (4,0);
+   \coordinate (d) at (0,-1);
+   \node (A) {$\Hom_{\mathbf{A}}(A,B)$};
+   \node (B) at ($(A) + (r)$) {$\Hom_{R-\mathbf{mod}}(FA,FB)$};
+   \visible<6->{
+   \node (a) at ($(A) + (d)$) {$F^{-1}\phi$};
+   }
+   \visible<5->{
+   \node (b) at ($(B) + (d)$) {$\phi$};
+   }
+   
+   \draw[draw=none] (A) -- node[]{$\cong$} (B);
+   \visible<6->{
+   \draw[draw=none] (a) -- node[rotate=90]{$\in$} (A);
+   \draw[draw=none] (a) -- node[]{$\leftrightarrow$} (b);
+   }
+   \visible<5->{
+   \draw[draw=none] (b) -- node[rotate=90]{$\in$} (B);
+   }
+  \end{tikzpicture}
+  \end{center}
+ \end{block}
+ \visible<7->{
+  Problem: this isomorphism between $\Hom$-sets is \textbf{not constructive}.
+  }
+\end{frame}
+
+
+\section{Additive relations}
+
+% Back to the snake lemma
+\begin{frame}[fragile]
+ \frametitle{Back to the snake lemma}
+ \begin{center}
+ \begin{tikzpicture}[mystyle/.style={scale=.7}]
+  \matrix[matrix of math nodes,column sep={70pt,between origins},row sep={40pt,between origins}] (s)
+  { & & & |[name=Kernel]| \text{{$c \in \kernel(\gamma)$ }} & \\
+    &|[name=A]| A &|[name=B]| \text{{\only<2->{\color{red}}$b \in B$}} &|[name=C]| \text{{$c \in C$}} &|[name=01]| 0 \phantom{C}  \\
+    |[name=02]| \phantom{a'} 0 &|[name=A']| \text{ {$a' \in A'$} } &|[name=B']| \text{ {$b' \in B'$} } &|[name=C']| C' \\
+    & |[name=Coker]| \text{ {$a' + \im( \alpha )\in \coker( \alpha )$} } & & & \\
+  };
+              \path[->,thick] (Kernel) edge (C);
+              \path[->,thick] (C) edge (01);
+              \path[->,thick] (A) edge (B);
+              \path[->,thick] (B) edge node[mystyle,anchor=south] {$\epsilon$} (C);
+              \path[->,thick] (A) edge node[mystyle,anchor=east] {$\alpha$} (A');
+              \path[->,thick] (B) edge node[mystyle, anchor=east] {$\beta$} (B');
+              \path[->,thick] (C) edge node[mystyle,anchor=east] {$\gamma$} (C');
+              \path[->,thick] (02) edge (A');
+              \path[->,thick] (A') edge node[mystyle,anchor=north] {$\mu$} (B');
+              \path[->,thick] (B') edge (C');
+              \path[->,thick] (A') edge (Coker);
+              \draw[->,rounded corners,thick,blue] (Kernel) -| ($(01.east)+(.5,0)$) |- ($(B)!.35!(B')$) -|
+    ($(02.west)+(-.5,0)$) |- (Coker);
+  \end{tikzpicture}
+ \end{center}
+ 
+ \begin{block}{}
+ \begin{center}
+  \only<1>{ Result: $c \stackrel{{\color{blue}\partial}}{\mapsto} a' + \im( \alpha )$. \phantom{$\stackrel{:}{T_g}$} }
+  \only<2>{ Crucial step: the \textbf{uncanonical} choice $b \in \epsilon^{-1}(\{c\})$. \phantom{$\stackrel{:}{T_g}$} }
+  \only<3>{ Make this step canonical: \textbf{relations} instead of maps: $c \mapsto \epsilon^{-1}(\{c\})$ \phantom{$\stackrel{:}{T_g}$}}
+  \end{center}
+ \end{block}
+\end{frame}
+
+% Relations
+\begin{frame}[fragile]
+ \frametitle{Relations}
+ Let $A,B$ be abelian groups.
+ \pause
+ \begin{block}{Definition}
+  A subgroup $f \subseteq A \oplus B$ is called a \textbf{relation from $A$ to $B$}.
+ \end{block}
+ \pause
+ \begin{block}{Example}
+  Let $\epsilon: A \rightarrow B$ be a homomorphism of abelian groups. 
+  \pause
+  \[
+   \{ (a,b) \in A \oplus B ~|~ \epsilon(a) = b \}
+  \]
+  is a relation from $A$ to $B$\pause, called \textbf{graph of $\epsilon$}\pause, and
+  \[
+   \epsilon^{-1} := \{ (b,a) \in B \oplus A ~|~ \epsilon(a) = b \}
+  \]
+  is a relation from $B$ to $A$\pause, called \textbf{pseudo-inverse of $\epsilon$}.
+ \end{block}
+\end{frame}
+
+% Relations
+\begin{frame}[fragile]
+ \frametitle{Relations}
+ \begin{block}{Composition of relations}
+  \pause Given $f \subseteq A \oplus B$ and $g \subseteq B \oplus C$, define \pause
+  \[
+   g \circ f := \{ (a,c) \in A \oplus C ~|~ \exists b \in B: (a,b) \in f, (b,c) \in g \}
+  \]
+ \end{block}
+ \pause
+\begin{center}
+ If $f$ and $g$ correspond to maps, this describes their usual composition.
+\end{center}
+\end{frame}
+
+% Relations
+\begin{frame}[fragile]
+ \frametitle{Relations}
+ \begin{itemize}
+  \item[Q:] When does an additive relation $f \subseteq A \oplus B$ defines an honest map (a group homomorphism)?
+ \end{itemize}
+ \pause
+ \begin{block}{Domain}
+  $\domain(f) := \big\{ a \in A \mid \exists b \in B: (a,b) \in f \big\} \visible<5->{{\color{red}\ = A}}$
+ \end{block}
+ \pause
+ \begin{block}{Defect}
+  $\defect(f) := \big\{ b \in B \mid (0,b) \in f \big\} \visible<7->{{\color{red}\ = 0 }}$
+ \end{block}
+ \pause
+ \begin{itemize}
+  \item[A:] When it has a full domain \pause\pause and $0$ defect.
+ \end{itemize}
+
+\end{frame}
+
+% The snake lemma for a last time
+\begin{frame}[fragile]
+ \frametitle{The snake lemma for a last time}
+ 
+ \begin{center}
+ \begin{tikzpicture}[mystyle/.style={scale=.7}]
+  \matrix[matrix of math nodes,column sep={70pt,between origins},row sep={40pt,between origins}] (s)
+  { & & & |[name=Kernel]| \kernel(\gamma) & \\
+    &|[name=A]| A &|[name=B]| B &|[name=C]| C &|[name=01]| 0 \phantom{C}  \\
+    |[name=02]| \phantom{a'} 0 &|[name=A']| A' &|[name=B']| B' &|[name=C']| C' \\
+    & |[name=Coker]| \coker(\alpha) & & & \\
+  };
+              \only<1>{\path[->,thick] (Kernel) edge node[mystyle,anchor=west] {$\iota$} (C); }
+              \only<2->{\path[->,blue,thick] (Kernel) edge node[mystyle,anchor=west] {$\iota$} (C); }
+              
+              \path[->,thick] (C) edge (01);
+              \path[->,thick] (A) edge (B);
+              
+              \only<1->{\path[->,thick] (B) edge node[mystyle,anchor=south] {$\epsilon$} (C);}
+              \only<3->{\path[->,red,thick, out=north west, in=north east] (C) edge node[mystyle,anchor=south] {$\epsilon^{-1}$} (B);}
+              
+              \path[->,thick] (A) edge node[mystyle,anchor=east] {$\alpha$} (A');
+              
+              \only<1-3>{\path[->,thick] (B) edge node[mystyle, anchor=east] {$\beta$} (B');}
+              \only<4->{\path[->,blue,thick] (B) edge node[mystyle, anchor=east] {$\beta$} (B');}
+              
+              \path[->,thick] (C) edge node[mystyle,anchor=east] {$\gamma$} (C');
+              \path[->,thick] (02) edge (A');
+              
+              \only<1->{\path[->,thick] (A') edge node[mystyle,anchor=north] {$\mu$} (B');}
+              \only<5->{\path[->,red,thick, out=south west, in=south east] (B') edge node[mystyle,anchor=north] {$\mu^{-1}$} (A');}
+              
+              \path[->,thick] (B') edge (C');
+              
+              \only<1-5>{\path[->,thick] (A') edge node[mystyle,anchor=east] {$\pi$}(Coker);}
+              \only<6->{\path[->,blue,thick] (A') edge node[mystyle,anchor=east] {$\pi$}(Coker);}
+              \visible<7->{
+              \draw[->,blue,rounded corners,thick] (Kernel) -| ($(01.east)+(.5,0)$) |- ($(B)!.35!(B')$) -|
+    ($(02.west)+(-.5,0)$) |- (Coker);}
+  \end{tikzpicture}
+ \end{center}
+
+ \begin{block}{}
+ \begin{center}
+  \only<1>{Wanted: $\kernel(\gamma) \stackrel{\partial}{\longrightarrow} \coker( \alpha )$. \phantom{$\stackrel{:}{T_g}$} }
+  \only<2-6>{
+  \visible<6->{${\color{blue}\pi} \circ$ }
+  \visible<5->{${\color{red}\mu^{-1}} \circ$ }
+  \visible<4->{${\color{blue}\beta} \circ$ }
+  \visible<3->{${\color{red}\epsilon^{-1}} \circ$} 
+  \visible<2->{${\color{blue}\iota}$ \phantom{$\stackrel{:}{T_g}$}}
+  }
+  \only<7->{\textbf{$\partial$ is an honest map given by a composition of relations!} \phantom{$\stackrel{:}{T_g}$}}
+  \end{center}
+ \end{block}
+ 
+\end{frame}
+
+\section{Generalized morphisms}
+
+% From relations to generalized morphisms
+\begin{frame}[fragile]
+ \frametitle{From relations to generalized morphisms}
+ \begin{block}{}
+ \begin{center}
+  \begin{itemize}
+   \item \textbf{\color{blue}Wanted}: a categorical framework for relations.
+   \pause
+   \item \textbf{\color{blue}Solution}: generalized morphisms.
+  \end{itemize}
+ \end{center}
+ \end{block} 
+\end{frame}
+
+% From relations to generalized morphisms
+\begin{frame}[fragile]
+ \frametitle{From relations to generalized morphisms}
+ Let $A,B$ be objects in an abelian category $\mathbf{A}$.
+ \pause
+ \begin{block}{\visible<2->{Relation} \visible<5->{$\rightsquigarrow$ generalized morphism} \visible<6->{(data structure: span)}}
+  \begin{center}
+   \begin{tikzpicture}[mystyle/.style={scale=.7}]
+  \matrix[matrix of math nodes,column sep={40pt,between origins},row sep={40pt,between origins}] (s)
+  {
+    |[name=A]| \text{ \visible<4->{$A$} } & |[name=AplusB]| \text{ \visible<2-3>{$A \oplus B$} } & |[name=B]| \text{ \visible<4->{$B$} } \\
+    & |[name=D]| D & \\
+  }; 
+  \visible<2>{
+  \path[right hook->, thick] (D) edge (AplusB);
+  }
+  \visible<3>{
+  \path[right hook->, thick] (D) edge node[mystyle,anchor=east] {$\left( \begin{array}{cc} {\color{red}\alpha} & {\color{blue}\beta} \end{array} \right)$} (AplusB);
+  }
+  \visible<4->{
+  \path[->, thick, red] (D) edge node[mystyle, anchor= east]{ ${\color{red}\alpha}$ }(A);
+  \path[->, thick, blue] (D) edge node[mystyle, anchor= west]{ ${\color{blue}\beta}$ }(B);
+  }
+  \visible<5->{
+  \path[->, dashed, thick] (A) edge (B);
+  }
+ \end{tikzpicture}
+  \end{center}
+ \end{block}
+ \pause
+ \pause
+ \pause
+ \pause
+ \pause
+ \begin{block}{Equality}
+  \pause
+  Two spans $( \alpha, \beta )$ and $( \alpha', \beta' )$ are \textbf{equal as generalized morphisms}
+  if \pause
+  \[
+   \im\left( ( \alpha, \beta ): D \rightarrow A \oplus B \right) = \im\left( ( \alpha', \beta' ): D' \rightarrow A \oplus B \right).
+  \]
+ \end{block}
+\end{frame}
+
+% Composition of generalized morphisms
+\begin{frame}[fragile]
+ \frametitle{Composition of generalized morphisms}
+ 
+ \begin{block}{Composition} \pause
+ \begin{overlayarea}{\linewidth}{7.3\baselineskip}
+ \begin{center}
+   \begin{tikzpicture}
+      \matrix (s) [matrix of math nodes,column sep={40pt,between origins},row sep={40pt,between origins}]
+      {  A &  & \phantom{B}  &  & C \\
+         & \phantom{X}  &  & \phantom{Y}  &  & \\ 
+         & & \phantom{X \times_B Y} & & \\ };
+      
+      \visible<2-6>{
+	\path[->,dashed,thick] (s-1-1) edge (s-1-3);
+      }
+      \visible<7->{
+	\path[->,color=gray,dashed,thick] (s-1-1) edge (s-1-3);
+	\path[-,dashed,thick] (s-1-1) edge (s-1-3);
+      }
+      \path[->,dashed,thick] (s-1-3) edge (s-1-5);
+	
+      \visible<2-6>{
+	\path[->,thick] (s-2-4) edge (s-1-5);  
+	\path[->,thick] (s-2-2) edge (s-1-1);
+      }
+      
+      \visible<2-3>{
+	\path[->,thick] (s-2-2) edge (s-1-3);
+	\path[->,thick] (s-2-4) edge (s-1-3);
+	\node at (s-2-2) {$X$};
+	\node at (s-2-4) {$Y$};
+	\node at (s-1-3) {$B$};
+      }
+	
+      
+      \visible<4-6>{
+	  \path[->,color=red,thick] (s-2-2) edge (s-1-3);
+	  \path[->,color=red,thick] (s-2-4) edge (s-1-3);
+	  \node[color=red] at (s-1-3) {$B$};
+	  \node[color=red] at (s-2-2) {$X$};
+	  \node[color=red] at (s-2-4) {$Y$};
+      }
+      
+      
+      \visible<5-6>{
+	\path[->,color=red,thick] (s-3-3) edge (s-2-2);
+	\path[->,color=red,thick] (s-3-3) edge (s-2-4);
+	\node[color=red] at (s-3-3) {$X \times_B Y$};
+      }
+      
+      \visible<7->{
+	\node at (s-2-2) {$X$};
+	\node at (s-2-4) {$Y$};
+	\node[color=gray] at (s-1-3) {$B$};
+	\node at (s-3-3) {$X \times_B Y$};
+	\path[->,color=gray] (s-2-2) edge (s-1-3);
+	\path[->,color=gray] (s-2-4) edge (s-1-3);
+	\path[->,thick,thick] (s-2-4) edge (s-1-5);  
+	\path[->,thick,thick] (s-2-2) edge (s-1-1);
+	\path[->,thick,thick] (s-3-3) edge (s-2-2);
+	\path[->,thick,thick] (s-3-3) edge (s-2-4);
+      }
+   \end{tikzpicture}
+   \end{center}
+ \end{overlayarea}
+ \end{block}
+ \visible<8->{
+ \begin{center}
+  $\rightsquigarrow$ Category of generalized morphisms $\G( \mathbf{A} )$
+ \end{center}}
+ 
+\end{frame}
+
+% Pseudo-inverses
+\begin{frame}[fragile]
+  \frametitle{Pseudo-inverses}
+ \begin{block}{Pseudo-inverses}
+  \begin{center}
+  \begin{tabular}{ccc}
+   \begin{tikzpicture}[baseline=(s-2-2)]
+      \matrix[matrix of math nodes,column sep={20pt,between origins},row sep={25pt,between origins}] (s)
+      {
+      A & & &  & B\\
+      & \phantom{D} & & \phantom{D} & \\
+      & & D  &  & \\
+      };
+         \visible<1>{
+         \path[->, thick] (s-3-3) edge (s-1-1);
+         \path[->, thick] (s-3-3) edge (s-1-5);
+         }
+         \visible<2->{
+         \path[->,red, thick] (s-3-3) edge (s-1-1);
+         \path[->,blue, thick] (s-3-3) edge (s-1-5);
+         }
+         \visible<3->{\path[<->,bend left, thick] (s-2-2) edge (s-2-4);}
+         
+         \path[->,dashed, thick] (s-1-1) edge (s-1-5);
+    \end{tikzpicture}
+    
+    &
+    \pause \pause \pause  {$\rightsquigarrow$} \pause
+    &
+      \begin{tikzpicture}[baseline=(s-2-2)]
+      \matrix[matrix of math nodes,column sep={20pt,between origins},row sep={25pt,between origins}] (s)
+      {
+      B & & &  & A\\
+      & \phantom{D} & & \phantom{D} & \\
+      & & D  &  & \\
+      };
+         \path[->,blue, thick] (s-3-3) edge (s-1-1);
+         \path[->,red, thick] (s-3-3) edge (s-1-5);
+         \path[->,dashed, thick] (s-1-1) edge (s-1-5);
+    \end{tikzpicture}
+   
+   
+  \end{tabular}
+\end{center}
+ \end{block}
+\end{frame}
+
+% Honest morphisms
+\begin{frame}[fragile]
+ \frametitle{Honest morphisms}
+ \pause
+ \begin{block}{Honest morphisms}
+  $\mathbf{A}$ embeds into $\G( \mathbf{A} )$:
+  \pause
+  \begin{center}
+   \begin{tabular}{ccc}
+    \begin{tikzpicture}[baseline=(base)]
+        \coordinate (r) at (2.5,0);
+        \coordinate (d) at (0,-2);
+        \node (A) {$A$};
+        \node (B) at ($(A) + (r)$) {$B$};
+        \node (base) at ($(A) + (0,-0.1)$) {};
+        \draw[->,thick,blue] (A) -- (B);
+    \end{tikzpicture}
+    
+    &
+    \pause {$\mapsto$} \pause
+    &
+      \begin{tikzpicture}[baseline=(s-2-2)]
+      \matrix[matrix of math nodes,column sep={20pt,between origins},row sep={25pt,between origins}] (s)
+      {
+      A & & &  & B\\
+      & \phantom{A} & & \phantom{A} & \\
+      & & A  &  & \\
+      };
+         \path[->, thick] (s-3-3) edge node[left]{$\id_A$} (s-1-1);
+         \path[->,blue, thick] (s-3-3) edge (s-1-5);
+         \path[->,dashed, thick] (s-1-1) edge (s-1-5);
+    \end{tikzpicture}
+  \end{tabular}
+  \end{center}
+  \pause
+  Generalized morphisms with such a representation are called \textbf{honest}.
+ \end{block}
+\end{frame}
+
+% 
+\begin{frame}[fragile]
+ \frametitle{Honest morphisms}
+ \begin{itemize}
+  \item[Q:] When does $A \stackrel{\alpha}{\longleftarrow} D \stackrel{\beta}{\longrightarrow} B$ define an honest morphism?
+ \end{itemize}
+ \pause
+ \begin{block}{Domain}
+  $\domain(A \stackrel{\alpha}{\longleftarrow} D \stackrel{\beta}{\longrightarrow} B) := \im( \alpha ) \visible<5->{{\color{red}\ = A }}$
+ \end{block}
+ \pause
+ \begin{block}{Defect}
+  $\defect(A \stackrel{\alpha}{\longleftarrow} D \stackrel{\beta}{\longrightarrow} B) := \beta( \kernel( \alpha ) ) \visible<7->{{\color{red}\ = 0 }}$
+ \end{block}
+ \pause
+ \begin{itemize}
+  \item[A:] When it has a full domain \pause\pause and $0$ defect.
+ \end{itemize}
+
+\end{frame}
+
+% Computing representatives
+\begin{frame}[fragile]
+ \frametitle{Computing representatives}
+ \pause
+ Given an honest generalized morphism in $\G( \mathbf{A} )$, compute the corresponding morphism in $\mathbf{A}$.
+ \pause
+ \begin{block}{}
+  \begin{center}
+   \begin{tikzpicture}[baseline=(s-2-2)]
+      \matrix[matrix of nodes,column sep={20pt,between origins},row sep={20pt,between origins}] (s)
+      {
+        & & |[name=P]|\text{\visible<4-5>{{\only<5>{\color{gray}}$A\sqcup_D B$}}} & &\\
+        & &   & &\\
+      |[name=A]|$A$ & & &  & |[name=B]|$B$\\
+      &  & &  & \\
+      & & |[name=D]| \text{\only<1-4>{{\only<4>{\color{gray}}$D$}} \only<5-7>{$A \times_{A\sqcup_D B} B$}}  &  & \phantom{$A \times_{A\sqcup_D B} B$} \\
+      };
+         \visible<1-3,5-7>{
+         \path[->, thick] (D) edge (B);
+         }
+         \visible<1-3,5>{
+         \path[->, thick] (D) edge (A);
+         }
+         \visible<4>{
+         \path[->, thick,gray] (D) edge (B);
+         }
+         \visible<4>{
+         \path[->, thick,gray] (D) edge (A);
+         }
+         
+         \visible<6>{
+         \path[->,thick] (D) edge node[above, inner sep = 0em,rotate=-45]{$\sim$} (A);
+         }
+         \visible<7>{
+         \path[->,thick] (A) edge node[above, inner sep = 0em,rotate=-45]{$\sim$} (D);
+         }
+         \visible<8>{
+         \path[->,thick] (A) edge (B);
+         }
+         
+         \visible<4>{
+         \path[->,thick] (A) edge (P);
+         \path[->,thick] (B) edge (P);
+         }
+         \visible<5>{
+         \path[->,thick,gray] (A) edge (P);
+         \path[->,thick,gray] (B) edge (P);
+         }
+         
+         
+    \end{tikzpicture}
+  \end{center}
+ \end{block}
+\end{frame}
+
+% Computing representatives
+\begin{frame}[fragile]
+ \frametitle{Computing representatives}
+ Given an honest generalized morphism in $\G( \mathbf{A} )$, compute the corresponding morphism in $\mathbf{A}$.
+ \begin{block}{}
+  \begin{center}
+   \begin{tikzpicture}[baseline=(s-2-2)]
+      \matrix[matrix of nodes,column sep={20pt,between origins},row sep={20pt,between origins}] (s)
+      {
+        & & |[name=P]|\text{\visible<2,3>{{\only<3>{\color{gray}}$\Q$}}} & & \phantom{$A\sqcup_D B$}\\
+        & &   & &\\
+      |[name=A]|$\Q$ & & &  & |[name=B]|$\Q$\\
+      &  & &  & \\
+      & & |[name=D]| \text{\only<1,2>{{\only<2>{\color{gray}}$\Q^2$}} \only<3-5>{$\Q$}}  &  & \phantom{$A \times_{A\sqcup_D B} B$} \\
+      };
+         \visible<1>{
+         \path[->, thick] (D) edge (B);
+         \path[->, thick] (D) edge (A);
+         }
+         \visible<2>{
+         \path[->, thick,gray] (D) edge (B);
+         \path[->, thick,gray] (D) edge (A);
+         }
+         \visible<3-5>{
+         \path[->, thick] (D) edge node[right, inner sep = 0.5em] {$2$} (B);
+         }
+         \visible<3>{
+         \path[->, thick] (D) edge node[left, inner sep = 0.5em]{$1$} (A);
+         }
+         \visible<4>{
+         \path[->,thick] (D) edge node[left, inner sep = 0.5em]{$1$} node[above, inner sep = 0em,rotate=-45]{$\sim$} (A);
+         }
+         \visible<5>{
+         \path[->,thick] (A) edge node[left, inner sep = 0.5em]{$1$} node[above, inner sep = 0em,rotate=-45]{$\sim$} (D);
+         }
+         \visible<6>{
+         \path[->,thick] (A) edge node[above]{$2$} (B);
+         }
+         
+         \visible<2>{
+         \path[->,thick] (A) edge node[left, inner sep = 0.5em] {$2$} (P);
+         \path[->,thick] (B) edge node[right, inner sep = 0.5em] {$1$}(P);
+         }
+         \visible<3>{
+         \path[->,thick,gray] (A) edge node[left, inner sep = 0.5em,gray] {$2$} (P);
+         \path[->,thick,gray] (B) edge node[right, inner sep = 0.5em,gray] {$1$}(P);
+         }
+         
+         \visible<1>{
+         \node[above,font=\tiny] at ($(A) + (0,-1.2)$) {$\left(\begin{array}{cc} 1 \\ -1 \end{array} \right)$};
+         \node[above,font=\tiny] at ($(B) + (0,-1.2)$) {$\left(\begin{array}{cc} 2 \\ -2 \end{array} \right)$};
+         }
+         \visible<2>{
+         \node[above,font=\tiny,gray] at ($(A) + (0,-1.2)$) {$\left(\begin{array}{cc} 1 \\ -1 \end{array} \right)$};
+         \node[above,font=\tiny,gray] at ($(B) + (0,-1.2)$) {$\left(\begin{array}{cc} 2 \\ -2 \end{array} \right)$};
+         }
+         
+         
+    \end{tikzpicture}
+  \end{center}
+ \end{block}
+\end{frame}
+
+% Constructive diagram chases
+\begin{frame}[fragile]
+ \frametitle{Constructive diagram chases}
+ \pause
+ \begin{block}{Strategy for constructive diagram chases}
+  \pause
+  \begin{enumerate}
+   \item Compute in $\G( \mathbf{A} )$ using pseudo-inverses and compositions.
+   \pause
+   \item Compute the honest representative of the resulting generalized morphism.
+  \end{enumerate}
+ \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Example: functoriality of homology}
+ Let $\left( P_\bullet, \partial \right)$ be a complex in an abelian category $\mathcal{A}$. \pause Then we can compute the generalized
+ embedding of the $i$-th homology. \pause
+ \begin{block}{}
+ \begin{center}
+   \begin{tikzpicture}
+      \matrix (s) [matrix of math nodes,column sep=20pt,row sep=20pt,nodes in empty cells]
+      {  P_{i+1} & & P_i & & P_{i-1} \\
+         & \phantom{\Image \left( \partial_{i+1} \right)} & & \phantom{\Kernel \left( \partial_i \right)} & \phantom{\CH_i \left( P_\bullet \right)} \\  };
+      \path[->,thick] (s-1-1) edge node[above]{$\partial_{i+1}$} (s-1-3);
+      \path[->,thick] (s-1-3) edge node[above]{$\partial_{i}$} (s-1-5);
+      
+      \visible<4->{
+        \node at (s-2-2) {$\Image \left( \partial_{i+1} \right)$};
+        \path[right hook->,thick] (s-2-2) edge (s-1-3);
+      }
+      
+      \visible<5->{
+        \node at (s-2-4) {$\Kernel \left( \partial_i \right)$};
+      }
+      
+      \visible<5-7>{
+        \path[right hook->,thick] (s-2-4) edge (s-1-3);
+      }
+      
+      \visible<6->{
+        \path[right hook->,thick] (s-2-2) edge (s-2-4);
+      }
+      
+      \visible<7->{
+        \node at (s-2-5) {$\CH_i \left( P_\bullet \right)$};
+      }
+      
+      \visible<7>{
+        \path[->>,thick] (s-2-4) edge (s-2-5);
+      }
+      
+      \visible<8->{
+        \path[->>,color=red,thick] (s-2-4) edge (s-2-5);
+        \path[right hook->,color=red,thick] (s-2-4) edge (s-1-3);
+        \path[left hook->,dashed,thick] (s-2-5) edge (s-1-3);
+      }
+      
+   \end{tikzpicture}
+  \end{center}
+ \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Example: functoriality of homology}
+ 
+ \begin{theorem}
+  Let $\mathcal{A}$ be an abelian category and $\varepsilon: P_\bullet \rightarrow Q_\bullet$ a chain morphism. \pause
+  Then the morphism $\CH_i \left( P_\bullet \right) \rightarrow \CH_i \left( Q_\bullet \right)$ can be computed using generalized morphisms: \pause
+  \begin{center}
+   \begin{tikzpicture}
+      \matrix (s) [matrix of math nodes,column sep=20pt,row sep=20pt,nodes in empty cells]
+      {  \phantom{\CH_i \left( P_\bullet \right)} & P_i & Q_i & \phantom{ \CH_i \left( Q_\bullet \right) } \\ };
+      
+      \path[->,thick] (s-1-2) edge node[above] {$\varepsilon_i$} (s-1-3);
+      
+      \visible<4->{
+        \node at (s-1-1) {$\CH_i \left( P_\bullet \right)$};
+        \path[->,dashed,thick] (s-1-1) edge (s-1-2);
+      }
+      
+      \visible<5->{
+        \node at (s-1-4) {$\CH_i \left( Q_\bullet \right)$};
+      }
+      \visible<5>{
+        \path[->,dashed,thick] (s-1-4) edge (s-1-3);
+      }
+      
+      \visible<6->{
+        \path[->,dashed,color=red,thick] (s-1-3) edge (s-1-4);
+      }
+      \visible<7->{
+        \path[->, bend right,thick] (s-1-1) edge (s-1-4);
+      }
+   \end{tikzpicture}
+  \end{center}
+ \end{theorem}
+\end{frame}
+
+
+\section{Applications of generalized morphisms}
+
+
+\subsection{An algorithm for spectral sequences}
+
+
+\begin{frame}[fragile]
+  \frametitle{Spectral sequences via generalized morphisms}
+  \begin{center}
+    \begin{tabular}{c}
+      \vspace{-1em}
+      \only<1>{Given: an excerpt of a filtered chain complex.}
+      \only<2>{We pass to its graded parts.}
+      \only<3-6>{We can compute the differentials via generalized morphisms.}
+      \only<7>{This is a generalized \textbf{subquotient embedding}.}
+      \only<11>{This is a generalized \textbf{subquotient projection}.}
+      \only<12-14>{We can compose the arrows.}
+      \only<15-16>{This formula still makes sense if we map $1$ step down.}
+      \only<17->{One more step \dots}
+      \\
+      \hspace{30em}
+      \\[-0.1em]
+      \hline   
+      \begin{tikzpicture}[every node/.style={scale=0.8},baseline=(S1)]
+            \coordinate (r) at (1.75,0);
+            \coordinate (d) at (0,-1.1);
+            \node (A1) {};
+            \node (A2) at ($(A1) + (r)$) {$\vdots$};
+            \node (A3) at ($(A2) + (r)$) {$\vdots$};
+            \node (A4) at ($(A3) + (r)$) {$\vdots$};
+            \node (A5) at ($(A4) + (r)$) {};
+            
+            \node (B1) at ($(A1) + 0.9*(d)$) {$\cdots$};
+            
+            \node (B2) at ($(B1) + (r)$) {\only<1>{$A_{i+1}$}\only<2->{$\frac{A_{i+1}}{A_{i}}$}};
+
+            \node (B3) at ($(B2) + (r)$) {\only<1>{$B_{i+1}$}\only<2->{$\frac{B_{i+1}}{B_{i}}$}};
+            \node (B4) at ($(B3) + (r)$) {\only<1>{$C_{i+1}$}\only<2->{$\frac{C_{i+1}}{C_{i}}$}};
+            \node (B5) at ($(B4) + (r)$) {$\cdots$};
+            
+            \node (C1) at ($(B1) + (d)$) {$\cdots$};
+            \node (C2) at ($(C1) + (r)$) {\only<1>{$A_{i}$}\only<2->{$\frac{A_{i}}{A_{i-1}}$}};
+            \node (C3) at ($(C2) + (r)$) {\only<1>{$B_{i}$}\only<2->{$\frac{B_{i}}{B_{i-1}}$}};
+            \node (C4) at ($(C3) + (r)$) {\only<1>{$C_{i}$}\only<2->{$\frac{C_{i}}{C_{i-1}}$}};
+            \node (C5) at ($(C4) + (r)$) {$\cdots$};
+            
+            \node (D1) at ($(C1) + (d)$) {$\cdots$};
+            \node (D2) at ($(D1) + (r)$) {\only<1>{$A_{i-1}$}\only<2->{$\frac{A_{i-1}}{A_{i-2}}$}};
+            \node (D3) at ($(D2) + (r)$) {\only<1>{$B_{i-1}$}\only<2->{$\frac{B_{i-1}}{B_{i-2}}$}};
+            \node (D4) at ($(D3) + (r)$) {\only<1>{$C_{i-1}$}\only<2->{$\frac{C_{i-1}}{C_{i-2}}$}};
+            \node (D5) at ($(D4) + (r)$) {$\cdots$};
+            
+            \node (E1) at ($(D1) + 0.9*(d)$) {};
+            \node (E2) at ($(E1) + (r)$) {$\vdots$};
+            \node (E3) at ($(E2) + (r)$) {$\vdots$};
+            \node (E4) at ($(E3) + (r)$) {$\vdots$};
+            \node (E5) at ($(E4) + (r)$) {};
+            
+            \node (S1) at ($(A1) - 0.5*(d)$) {$\cdots$};
+            \node (S2) at ($(A2) - 0.5*(d)$) {$A$};
+            \node (S3) at ($(A3) - 0.5*(d)$) {$B$};
+            \node (S4) at ($(A4) - 0.5*(d)$) {$C$};
+            \node (S5) at ($(A5) - 0.5*(d)$) {$\cdots$};
+            
+            \only<1-15>{
+                \draw[->,thick] (B1) -- (B2);
+                \draw[->,thick] (B2) --node[above]{\only<2-15>{$\overline{\partial}$}} (B3);
+                \draw[->,thick] (B3) --node[above]{\only<2-15>{$\overline{\partial}$}} (B4);
+                \draw[->,thick] (B4) -- (B5);
+                
+                \draw[->,thick] (C1) -- (C2);
+                \draw[->,thick] (C2) -- (C3);
+                \draw[->,thick] (C3) -- (C4);
+                \draw[->,thick] (C4) -- (C5);
+                
+                \draw[->,thick] (D1) -- (D2);
+                \draw[->,thick] (D2) -- (D3);
+                \draw[->,thick] (D3) -- (D4);
+                \draw[->,thick] (D4) -- (D5);
+            }
+            
+            \draw[->,thick] (S1) -- (S2);
+                \draw[->,thick] (S2) --node[above]{$\partial$} (S3);
+                \draw[->,thick] (S3) --node[above]{$\partial$} (S4);
+                \draw[->,thick] (S4) -- (S5);
+            
+            \only<16-17>{
+                \draw[->,thick,dashed] (B1) -- (C2);
+                \draw[->,thick,dashed] (B2) --node[above]{$\overline{\partial}^1$} (C3);
+                \draw[->,thick,dashed] (B3) -- (C4);
+                \draw[->,thick,dashed] (B4) -- (C5);
+                
+                \draw[->,thick,dashed] (C1) -- (D2);
+                \draw[->,thick,dashed] (C2) -- (D3);
+                \draw[->,thick,dashed] (C3) --node[above]{$\overline{\partial}^1$} (D4);
+                \draw[->,thick,dashed] (C4) -- (D5);
+            }
+            
+            \only<18->{
+                \draw[->,thick,dashed] (B1) -- (D2);
+                \draw[->,thick,dashed] (B2) --node[above,xshift=0.3em]{$\overline{\partial}^2$} (D3);
+                \draw[->,thick,dashed] (B3) -- (D4);
+                \draw[->,thick,dashed] (B4) -- (D5);
+            }
+            
+            
+            \only<1>{
+              \draw[right hook->,thick] (B2) -- (A2);
+              \draw[right hook->,thick] (B3) -- (A3);
+              \draw[right hook->,thick] (B4) -- (A4);
+              
+              \draw[right hook->,thick] (C2) -- (B2);
+              \draw[right hook->,thick] (C3) -- (B3);
+              \draw[right hook->,thick] (C4) -- (B4);
+              
+              \draw[right hook->,thick] (D2) -- (C2);
+              \draw[right hook->,thick] (D3) -- (C3);
+              \draw[right hook->,thick] (D4) -- (C4);
+              
+              \draw[right hook->,thick] (E2) -- (D2);
+              \draw[right hook->,thick] (E3) -- (D3);
+              \draw[right hook->,thick] (E4) -- (D4);
+            }
+        \end{tikzpicture}
+      
+      
+
+      \end{tabular}
+    
+    \end{center}
+    \vspace{-1em}
+    \visible<3->{
+     \begin{block}{}
+     
+      \begin{center} 
+      
+        \begin{tikzpicture}[every node/.style={scale=0.8}]
+            \coordinate (r) at (1.75,0);
+            \coordinate (d) at (0,-1.1);
+            \visible<4->{
+                \node (A1) {$\frac{A_{i+1}}{A_{i}}$};
+            }
+            
+            \visible<5->{
+                \node (A2) at ($(A1) + (r)$) {$A_{i+1}$};
+            }
+            \visible<6->{
+                \node (A3) at ($(A2) + (r)$) {$A$};
+            }
+            \visible<8->{
+                \node (A4) at ($(A3) + (r)$) {$B$};
+            }
+            
+            \visible<9->{
+                \node (A5) at ($(A4) + (r)$) {\only<4-15>{$B_{i+1}$}\only<16-17>{$B_{i}$}\only<18->{$B_{i-1}$}};
+            }
+            
+            \visible<4->{
+                \node (A6) at ($(A5) + (r)$) {\only<4-15>{$\frac{B_{i+1}}{B_{i}}$}\only<16-17>{$\frac{B_{i}}{B_{i-1}}$}\only<18->{$\frac{B_{i-1}}{B_{i-2}}$}};
+            }
+            
+            \visible<3->{
+                \node (S) at ($(A1) - 0.4*(r)$) {\only<1-15>{$\overline{\partial}^{\phantom{1}}:$}\only<16-17>{$\overline{\partial}^1:$}\only<18->{$\overline{\partial}^2:$}  };
+            }
+            
+            \visible<5->{
+                \draw[->>,thick] (A2) -- (A1);
+            }
+            
+            \visible<6->{
+                \draw[right hook->,thick] (A2) -- (A3);
+            }
+            
+            \visible<8->{
+                {
+                \only<13->{\color{red}}
+                \draw[->,thick] (A3) --node[above]{$\partial$} (A4);
+                }
+            }
+            
+            \visible<9->{
+                \draw[left hook->,thick] (A5) -- (A4);
+            }
+            
+            \visible<10->{
+                \draw[->>,thick] (A5) -- (A6);
+            }
+            \visible<7->{
+                {
+                \only<12->{\color{red}}
+                \draw[bend left,->,thick,out=25,in=155, dashed] (A1) to (A3);
+                }
+            }
+            \visible<11->{
+                {
+                \only<14->{\color{red}}
+                \draw[bend left,->,thick,out=25,in=155, dashed] (A4) to (A6);
+                }
+            }
+        \end{tikzpicture}
+      
+      \end{center}
+    
+     \end{block}
+    }
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+ \frametitle{Spectral sequences via generalized morphisms}
+ 
+ For all $r \geq 0$, we get so-called generalized chain complexes.
+ 
+ \begin{block}{}
+    \begin{overlayarea}{\linewidth}{8\baselineskip}
+    \begin{center}
+        
+        \begin{tikzpicture}[every node/.style={scale=0.8}]
+                \coordinate (r) at (3,0);
+                \coordinate (d) at (0,-1.5);
+                \node (A1) {$\dots$};
+                \node (A2) at ($(A1) + 0.6*(r)$) {\only<1-5>{$\frac{A_{i+1}}{A_{i}}$}\only<6->{$\frac{F_{i+1}C_{j+1}}{F_{i}C_{j+1}}$} };
+                \node (A3) at ($(A2) + (r)$) {\only<1-5>{$\frac{B_{i+1-r}}{B_{i-r}}$}\only<6->{$\frac{F_{i+1-r}C_{j}}{F_{i-r}C_{j}}$}};
+                \node (A4) at ($(A3) + (r)$) {\only<1-5>{$\frac{C_{i+1-2r}}{C_{i-2r}}$}\only<6->{$\frac{F_{i+1-2r}C_{j-1}}{F_{i-2r}C_{j-1}}$}};
+                \node (A5) at ($(A4) + 0.6*(r)$) {$\dots$};
+                
+                \draw[->,thick,dashed] (A1) -- (A2);
+                \draw[->,thick,dashed] (A2) --node[above]{\only<1-5>{$\overline{\partial^r_A}$}} (A3);
+                \draw[->,thick,dashed] (A3) --node[above]{\only<1-5>{$\overline{\partial^r_B}$}} (A4);
+                \draw[->,thick,dashed] (A4) -- (A5);
+                
+                \visible<6->{
+                \node (C1) at ($(A1) - (d)$) {$\dots$};
+                \node (C2) at ($(C1) + 0.6*(r)$) {$C_{j+1}$};
+                \node (C3) at ($(C2) + (r)$) {$C_{j}$};
+                \node (C4) at ($(C3) + (r)$) {$C_{j-1}$};
+                \node (C5) at ($(C4) + 0.6*(r)$) {$\dots$};
+                \draw[->,thick](C1) -- (C2);
+                \draw[->,thick](C2) -- (C3);
+                \draw[->,thick](C3) -- (C4);
+                \draw[->,thick](C4) -- (C5);
+                \draw[->,thick,dashed](A2) -- (C2);
+                \draw[->,thick,dashed](A3) -- (C3);
+                \draw[->,thick,dashed](A4) -- (C4);
+                }
+                
+                \visible<2->{
+                  {
+                      \only<5->{\color{red}}
+                      \node (B3) at ($(A3) + (d)$) {\only<2-5>{$\frac{\domain( \overline{\partial^r_B} ) }{\defect( \overline{\partial^r_A} )}$}\only<6->{$E^r_{i+1-r,j-i+(r-1)}$}};
+                  }
+                  \draw[->,thick,dashed] (B3) -- (A3);
+                }
+                
+                \visible<3->{
+                    
+                    {
+                        \only<5->{\color{red}}
+                        \node (B1) at ($(A1) + (d)$) {$\dots$};
+                        \node (B2) at ($(A2) + (d)$) {\only<3-5>{$\frac{\domain}{\defect}$}\only<6->{$E^r_{i+1,j-i}$}};
+                        
+                        \node (B4) at ($(A4) + (d)$) {\only<3-5>{$\frac{\domain}{\defect}$}\only<6->{$E^r_{i+1-2r,j-i+2(r-1)}$}};
+                        \node (B5) at ($(A5) + (d)$) {$\dots$};
+                    }
+                    
+                    \draw[->,thick,dashed] (B2) -- (A2); 
+                    \draw[->,thick,dashed] (B4) -- (A4);
+                }
+                
+                \visible<4->{
+                  {
+                    \only<5->{\color{red}}
+                    \draw[->,thick] (B1) -- (B2);
+                    \draw[->,thick] (B2) -- (B3);
+                    \draw[->,thick] (B3) -- (B4);
+                    \draw[->,thick] (B4) -- (B5);
+                  }
+                }
+        \end{tikzpicture}
+        
+    \end{center}
+    \end{overlayarea}
+ \end{block}
+ \visible<5->{
+    \begin{block}{}
+        \begin{itemize}
+         \item These are the chain complexes on the $r$-th page of the associated \textbf{spectral sequence}.
+         \visible<7->{
+         \item We just computed them \textbf{without a recursive strategy}.
+         }
+        \end{itemize}
+
+    \end{block}
+
+ }
+\end{frame}
+
+
+\subsection{The purity filtration}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Spectral sequences}
+
+\begin{block}{Convergence}
+Let $C_\bullet := 0= F_{-n-1}C_\bullet \leq F_{-n} C_\bullet \leq \cdots \leq F_0 C_\bullet$ be a finitely filtered complex \pause
+and for $p,q \in \Z$, $r \geq 0$ let $E_{pq}^r$ be the \textbf{computed} objects \pause with their generalized embeddings
+   \begin{center}
+   \begin{tikzpicture}
+      \matrix (s) [matrix of math nodes,column sep=50pt,row sep=20pt]
+      {  E^r_{pq} & C_{p+q}. \\ };
+      
+      \path[right hook->, dashed,thick] (s-1-1) edge (s-1-2);
+   \end{tikzpicture}
+  \end{center} \pause
+ Then for all $p,q$ and all $k \geq n+1$ we have \pause
+ \[
+  E^k_{pq} \cong E^{n+1}_{pq} \visible<6->{ =:E^{\infty}_{pq}.}
+ \]
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+ \frametitle{Filtration morphisms}
+ %für filtrierte complexe
+ \begin{block}{}
+  Using the above generalized embedding and the generalized projection to the homology, \pause we get a generalized morphism \pause
+  \begin{center}
+      \begin{tikzpicture}
+      \matrix (s) [matrix of math nodes,column sep=35pt,row sep=30pt]
+      {  E_{p,q}^\infty & \phantom{C_{p+q}^a} & \phantom{\CH_{p+q} \left( C_\bullet \right) } \\
+        & \phantom{X} & \\};
+      \node at (s-1-3) {$\CH_{p+q} \left( C_\bullet \right)$};
+      \visible<3-6>{
+	\path[->,dashed, bend right,thick] (s-1-1) edge (s-1-3);
+      }
+      \visible<4-6>{
+	\path[right hook->, dashed,thick] (s-1-1) edge (s-1-2);
+	\node at (s-1-2) {$C_{p+q}$};
+      }
+      
+      \visible<5-6>{
+	\path[->>,dashed,thick] (s-1-2) edge (s-1-3);
+      }
+      \visible<7->{
+        \node at (s-2-2) {$X$};
+        \path[->,thick] (s-2-2) edge node[left,inner sep = 1em] {$\alpha$} (s-1-1);
+        \path[->,thick] (s-2-2)  edge node[right,inner sep = 1em] {$\beta$} (s-1-3);
+     }
+   \end{tikzpicture}
+  \end{center}
+  \pause \pause \pause \pause \pause
+  This induces a filtration on $H := \CH_{p+q} \left( C_\bullet \right)$ with \pause
+  \begin{align*}
+   F_{p} H /F_{p-1} H  & \cong E_{p,q}^\infty \\
+   F_{p} H & \cong \Image \left( \beta \right).
+  \end{align*}
+ \end{block}
+\end{frame}
+
+
+
+\begin{frame}
+ \frametitle{The bidualizing spectral sequence}
+ \begin{theorem}
+  Let $M$ be a finitely presented module over a computable ring $S$ of finite projective dimension. \pause
+  Then one can \textbf{compute} a filtered complex $C_\bullet$ with the following properties: \pause
+  \begin{enumerate}
+   \item $C_\bullet$ is exact everywhere except at $0$. \pause
+   \item $\CH_0 \left( C_\bullet \right)$ is constructively isomorphic to $M$. \pause
+   \item The induced spectral sequence of $C_\bullet$ is the bidualizing spectral sequence, \pause i.e., we have
+    \[
+  E^2_{pq} = \mathrm{Ext}^{-p}( \mathrm{Ext}^q( M, S ), S ) )  \Longrightarrow
+  M \quad \mbox{ for } p+q = 0,
+  \] \pause
+  which yields the purity filtration of $M$, \pause i.e., a finite filtration where
+all graded parts $F_{-i}M / F_{-(i+1)}M$ are pure of codimension $i$.
+  \end{enumerate}
+ \end{theorem}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Filtration morphisms}
+ %für filtrierte complexe
+ \begin{block}{}
+  Using all of the above, we now get the generalized morphism \pause
+  \begin{center}
+      \begin{tikzpicture}
+      \matrix (s) [matrix of math nodes,column sep=20pt,row sep=30pt]
+      {  E_{-p,p}^\infty & \phantom{C_{0}^a} & & \phantom{\CH_0 \left( C_\bullet \right) } & \phantom{M_0^a} \\
+        & & \phantom{X} & & \\};
+       \node at (s-1-5) {$M$};
+      \visible<2-5>{
+	\path[->,dashed, bend right,thick] (s-1-1) edge (s-1-5);
+      }
+      \visible<3-5>{
+	\path[right hook->, dashed,thick] (s-1-1) edge (s-1-2);
+	\node at (s-1-2) {$C_0$};
+      }
+      
+      \visible<4-5>{
+	\path[->>,dashed,thick] (s-1-2) edge (s-1-4);
+	\node at (s-1-4) {$\CH_0 \left( C_\bullet \right)$};
+      }
+      
+      \visible<5>{
+	\path[->,thick] (s-1-4) edge node[above,inner sep = -0.1em] {$\sim$} (s-1-5);
+      }
+      \visible<6->{
+        \node at (s-2-3) {$X$};
+        \path[->,thick] (s-2-3) edge node[left,inner sep = 1em] {$\alpha$} (s-1-1);
+        \path[->,thick] (s-2-3)  edge node[right,inner sep = 1em] {$\beta$} (s-1-5);
+     }
+   \end{tikzpicture}
+  \end{center}
+  \pause \pause \pause \pause \pause
+  For the purity filtration of $M$, we have \pause
+  \begin{align*}
+   F_{-p} M/F_{-p-1}M  & \cong E_{-p,p}^\infty \\
+   F_{-p}M & \cong \Image \left( \beta \right).
+  \end{align*}
+ \end{block}
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Presentations from filtrations}
+ Let $F_{-n} M \leq F_{-n+1} M \leq \dots \leq F_0 M := M$ be a finitely presented filtered module. \pause
+ \begin{block}{}
+  If $\mathtt{M}_i$ is a presentation matrix for $F_i M / F_{i-1}M$, \pause then $M$ can be presented by
+  an upper block triangular matrix
+  \[
+   \left( \begin{array}{ccccc}
+           \mathtt{M}_0 & * & \dots & \dots & * \\
+           & \mathtt{M}_{-1} & * & \dots & * \\
+           & & \ddots & \ddots & \vdots \\
+           & & & \mathtt{M}_{-n+1} & * \\
+           & & & & \mathtt{M}_{-n} \\
+          \end{array} \right).
+  \]
+ \end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Example: filtered presentation}
+ Consider the module with relations
+\begin{small}
+\[
+\left(
+  \begin{array}{cccccc}
+0&0&                 0&    0&       xz&-z^2 \\   
+0&    0&                 0&    0&       xy&-yz\\
+0&    -x^2z+xyz+xz^2&y^2z&-xz+yz&x-y&0\\   
+0&0&                 0&    0&       x^2&-xz\\
+-xy&    -x^3+x^2y+x^2z&  xy^2&-x^2+xy&0&  x-y\\
+ z& 0&                 0&    0&       0&  0\\ 
+  \end{array}
+\right)
+\]
+\end{small}
+\pause Computing the purity filtration by using the bidualizing spectral sequence yields
+\begin{small}
+\[
+ \left(
+ \begin{array}{ccccc|c|c}
+x& -z& 0&    0&     0&       0&  1\\ 
+-y&z&  y^2z&-yz^2&-xz+yz&0&  -1\\
+0& x-y&xy^2&-xyz&-x^2+xy&xy&0\\
+\hline
+0& 0&  0&    0&     0&       z&  0\\ 
+\hline
+0& 0&  0&    0&     0&       0&  z\\ 
+0& 0&  0&    0&     0&       0&  y\\ 
+0& 0&  0&    0&     0&       0&  x \\
+\end{array} \right)
+\]
+\end{small}
+\end{frame}
