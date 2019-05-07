@@ -33,20 +33,20 @@
  \begin{tikzpicture}[mystyle/.style={scale=.7}]
   \matrix[matrix of math nodes,column sep={70pt,between origins},row sep={40pt,between origins}] (s)
   { & & & |[name=Kernel]| \text{\only<1>{$\kernel(\gamma)$}\only<2>{${\color{red}c} \in \kernel(\gamma)$}\only<3->{$c \in \kernel(\gamma)$ }} & \\
-    &|[name=A]| A &|[name=B]| \text{\only<1-3>{$B$}\only<4>{${\color{red}b} \in B$}\only<5->{$b \in B$}} &|[name=C]| \text{\only<1-2>{$C$}\only<3>{${\color{red}c} \in C$}\only<4->{$c \in C$}} &|[name=01]| 0 \phantom{C}  \\
-    |[name=02]| \phantom{a'} 0 &|[name=A']| \text{ \only<1-5>{$A'$}\only<6>{${\color{red}a'} \in A'$}\only<7->{$a' \in A'$} } &|[name=B']| \text{ \only<1-4>{$B'$}\only<5>{${\color{red}b'} \in B'$}\only<6->{$b' \in B'$} } &|[name=C']| C' \\
+    &|[name=A]| A &|[name=B]| \text{\only<1-3>{$B$}\only<4>{${\color{red}b} \in B$}\only<5->{$b \in B$}} &|[name=C]| \text{\only<1-2>{$\coker\delta$}\only<3>{${\color{red}c} \in \coker\delta$}\only<4->{$c \in \coker\delta$}} &|[name=01]| 0 \phantom{C}  \\
+    |[name=02]| \phantom{a'} 0 &|[name=A']| \text{ \only<1-5>{$\ker\lambda$}\only<6>{${\color{red}a'} \in \ker\lambda$}\only<7->{$a' \in \ker\lambda$} } &|[name=B']| \text{ \only<1-4>{$B'$}\only<5>{${\color{red}b'} \in B'$}\only<6->{$b' \in B'$} } &|[name=C']| C' \\
     & |[name=Coker]| \text{ \only<1-6>{$\coker(\alpha)$}\only<7>{${\color{red}a' + \im( \alpha )}\in \coker( \alpha )$}\only<8->{$a' + \im( \alpha )\in \coker( \alpha )$} } & & & \\
   };
               \path[->,thick] (Kernel) edge (C);
               \path[->,thick] (C) edge (01);
-              \path[->,thick] (A) edge (B);
+              \path[->,thick] (A) edge node[mystyle,anchor=south]{$\delta$} (B);
               \path[->,thick] (B) edge node[mystyle,anchor=south] {$\epsilon$} (C);
               \path[->,thick] (A) edge node[mystyle,anchor=east] {$\alpha$} (A');
               \path[->,thick] (B) edge node[mystyle, anchor=east] {$\beta$} (B');
               \path[->,thick] (C) edge node[mystyle,anchor=east] {$\gamma$} (C');
               \path[->,thick] (02) edge (A');
               \path[->,thick] (A') edge node[mystyle,anchor=north] {$\mu$} (B');
-              \path[->,thick] (B') edge (C');
+              \path[->,thick] (B') edge node[mystyle,anchor=south]{$\lambda$} (C');
               \path[->,thick] (A') edge (Coker);
               \visible<8->{
               \draw[->,rounded corners,thick,blue] (Kernel) -| ($(01.east)+(.5,0)$) |- ($(B)!.35!(B')$) -|
@@ -58,7 +58,7 @@
  \begin{center}
   \only<1>{Wanted: $\kernel(\gamma) \stackrel{\partial}{\longrightarrow} \coker( \alpha )$. \phantom{$\stackrel{:}{T_g}$} }
   \only<2>{Start: $c \in \kernel( \gamma )$. \phantom{$\stackrel{:}{T_g}$}}
-  \only<3>{This lies in $C$. \phantom{$\stackrel{:}{T_g}$}}
+  \only<3>{This lies in $\coker\delta$. \phantom{$\stackrel{:}{T_g}$}}
   \only<4>{Choose: $b \in \epsilon^{-1}(\{c\})$. \phantom{$\stackrel{:}{T_g}$}}
   \only<5>{Map: $b \stackrel{\beta}{\mapsto} b'$. \phantom{$\stackrel{:}{T_g}$} }
   \only<6>{Compute: $a' \in \mu^{-1}(b')$. \phantom{$\stackrel{:}{T_g}$} }
@@ -123,20 +123,20 @@
  \begin{tikzpicture}[mystyle/.style={scale=.7}]
   \matrix[matrix of math nodes,column sep={70pt,between origins},row sep={40pt,between origins}] (s)
   { & & & |[name=Kernel]| \text{{$c \in \kernel(\gamma)$ }} & \\
-    &|[name=A]| A &|[name=B]| \text{{\only<2->{\color{red}}$b \in B$}} &|[name=C]| \text{{$c \in C$}} &|[name=01]| 0 \phantom{C}  \\
-    |[name=02]| \phantom{a'} 0 &|[name=A']| \text{ {$a' \in A'$} } &|[name=B']| \text{ {$b' \in B'$} } &|[name=C']| C' \\
+    &|[name=A]| A &|[name=B]| \text{{\only<2->{\color{red}}$b \in B$}} &|[name=C]| \text{{$c \in \coker\delta$}} &|[name=01]| 0 \phantom{C}  \\
+    |[name=02]| \phantom{a'} 0 &|[name=A']| \text{ {$a' \in \ker\lambda$} } &|[name=B']| \text{ {$b' \in B'$} } &|[name=C']| C' \\
     & |[name=Coker]| \text{ {$a' + \im( \alpha )\in \coker( \alpha )$} } & & & \\
   };
               \path[->,thick] (Kernel) edge (C);
               \path[->,thick] (C) edge (01);
-              \path[->,thick] (A) edge (B);
+              \path[->,thick] (A) edge node[mystyle,anchor=south]{$\delta$} (B);
               \path[->,thick] (B) edge node[mystyle,anchor=south] {$\epsilon$} (C);
               \path[->,thick] (A) edge node[mystyle,anchor=east] {$\alpha$} (A');
               \path[->,thick] (B) edge node[mystyle, anchor=east] {$\beta$} (B');
               \path[->,thick] (C) edge node[mystyle,anchor=east] {$\gamma$} (C');
               \path[->,thick] (02) edge (A');
               \path[->,thick] (A') edge node[mystyle,anchor=north] {$\mu$} (B');
-              \path[->,thick] (B') edge (C');
+              \path[->,thick] (B') edge node[mystyle,anchor=south]{$\lambda$} (C');
               \path[->,thick] (A') edge (Coker);
               \draw[->,rounded corners,thick,blue] (Kernel) -| ($(01.east)+(.5,0)$) |- ($(B)!.35!(B')$) -|
     ($(02.west)+(-.5,0)$) |- (Coker);
@@ -211,23 +211,23 @@
 
 \end{frame}
 
-% The snake lemma for a last time
+% The snake lemma with relations
 \begin{frame}[fragile]
- \frametitle{The snake lemma for a last time}
+ \frametitle{The snake lemma with relations}
  
  \begin{center}
  \begin{tikzpicture}[mystyle/.style={scale=.7}]
   \matrix[matrix of math nodes,column sep={70pt,between origins},row sep={40pt,between origins}] (s)
   { & & & |[name=Kernel]| \kernel(\gamma) & \\
-    &|[name=A]| A &|[name=B]| B &|[name=C]| C &|[name=01]| 0 \phantom{C}  \\
-    |[name=02]| \phantom{a'} 0 &|[name=A']| A' &|[name=B']| B' &|[name=C']| C' \\
+    &|[name=A]| A &|[name=B]| B &|[name=C]| \coker\delta &|[name=01]| 0 \phantom{C}  \\
+    |[name=02]| \phantom{a'} 0 &|[name=A']| \ker\lambda &|[name=B']| B' &|[name=C']| C' \\
     & |[name=Coker]| \coker(\alpha) & & & \\
   };
               \only<1>{\path[->,thick] (Kernel) edge node[mystyle,anchor=west] {$\iota$} (C); }
               \only<2->{\path[->,blue,thick] (Kernel) edge node[mystyle,anchor=west] {$\iota$} (C); }
               
               \path[->,thick] (C) edge (01);
-              \path[->,thick] (A) edge (B);
+              \path[->,thick] (A) edge node[mystyle,anchor=south]{$\delta$} (B);
               
               \only<1->{\path[->,thick] (B) edge node[mystyle,anchor=south] {$\epsilon$} (C);}
               \only<3->{\path[->,red,thick, out=north west, in=north east] (C) edge node[mystyle,anchor=south] {$\epsilon^{-1}$} (B);}
@@ -243,7 +243,7 @@
               \only<1->{\path[->,thick] (A') edge node[mystyle,anchor=north] {$\mu$} (B');}
               \only<5->{\path[->,red,thick, out=south west, in=south east] (B') edge node[mystyle,anchor=north] {$\mu^{-1}$} (A');}
               
-              \path[->,thick] (B') edge (C');
+              \path[->,thick] (B') edge node[mystyle,anchor=south]{$\lambda$} (C');
               
               \only<1-5>{\path[->,thick] (A') edge node[mystyle,anchor=east] {$\pi$}(Coker);}
               \only<6->{\path[->,blue,thick] (A') edge node[mystyle,anchor=east] {$\pi$}(Coker);}
