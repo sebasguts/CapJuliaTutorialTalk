@@ -104,7 +104,8 @@ RUN    git clone https://github.com/sebasguts/gap \
     && cd pkg \
     && ../bin/BuildPackages.sh \
     && git clone https://github.com/homalg-project/CAP_project \
-    && sudo ln -snf /home/oscar/gap-master/gap /usr/local/bin/gap
+    && git clone https://github.com/homalg-project/homalg_project \
+    && sudo ln -snf /home/oscar/gap/gap /usr/local/bin/gap
 
 ENV GAPROOT /home/oscar/gap
 
